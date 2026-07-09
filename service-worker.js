@@ -1,69 +1,120 @@
-/* =========================================================
-   HORMA — service worker
-   Estrategia: cache-first para estáticos, network-first para
-   la navegación (con fallback al index cacheado si no hay red).
-   ========================================================= */
+// =====================================================
+// SERVICE WORKER - HORMA Sneaker Culture
+// =====================================================
 
-const CACHE_NAME = "horma-v1";
-
-const PRECACHE_URLS = [
-  "index.html",
-  "css/styles.css",
-  "js/app.js",
-  "manifest.json",
-  "icons/icon-192.png",
-  "icons/icon-512.png",
-  "icons/favicon-48.png",
+const CACHE_NAME = 'horma-v1';
+const urlsToCache = [
+    '/',
+    '/index.html',
+    '/icon-192.png',
+    // Si tienes más archivos, agrégalos aquí
+    // '/style.css',
+    // '/script.js',
+    // '/icon-512.png'
 ];
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(PRECACHE_URLS))
-      .then(() => self.skipWaiting())
-  );
+// =====================================================
+// INSTALACIÓN
+// =====================================================
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then((cache) => {
+                console.log('✅ Cache abierto');
+                return cache.addAll(urlsToCache);
+            })
+            .then(() => self.skipWaiting())
+    );
 });
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((names) =>
-      Promise.all(
-        names
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => caches.delete(name))
-      )
-    ).then(() => self.clients.claim())
-  );
-});
-
-self.addEventListener("fetch", (event) => {
-  const { request } = event;
-  if (request.method !== "GET") return;
-
-  // Navegación: intenta la red primero, si falla usa el index cacheado.
-  if (request.mode === "navigate"){
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, response.clone()));
-          return response;
+// =====================================================
+// ACTIVACIÓN
+// =====================================================
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        console.log('🗑️ Cache antiguo eliminado:', cacheName);
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
         })
-        .catch(() => caches.match("index.html"))
+        .then(() => self.clients.claim())
     );
-    return;
-  }
+});
 
-  // Estáticos del mismo origen: cache-first, luego red, y guarda copia.
-  if (new URL(request.url).origin === self.location.origin){
+// =====================================================
+// INTERCEPTAR SOLICITUDES (OFFLINE)
+// =====================================================
+self.addEventListener('fetch', (event) => {
     event.respondWith(
-      caches.match(request).then((cached) => {
-        if (cached) return cached;
-        return fetch(request).then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          return response;
-        }).catch(() => cached);
-      })
+        caches.match(event.request)
+            .then((response) => {
+                // Si está en cache, devolverlo
+                if (response) {
+                    return response;
+                }
+
+                // Si no, hacer la solicitud a la red
+                return fetch(event.request).then((response) => {
+                    // Si la respuesta no es válida, devolverla así
+                    if (!response || response.status !== 200 || response.type !== 'basic') {
+                        return response;
+                    }
+
+                    // Clonar la respuesta para guardarla en cache
+                    const responseToCache = response.clone();
+                    caches.open(CACHE_NAME)
+                        .then((cache) => {
+                            cache.put(event.request, responseToCache);
+                        });
+
+                    return response;
+                }).catch(() => {
+                    // Si falla la red y no está en cache, mostrar página offline
+                    // (opcional: puedes crear un offline.html)
+                    return new Response('⚠️ Sin conexión a internet', {
+                        status: 503,
+                        statusText: 'Service Unavailable'
+                    });
+                });
+            })
     );
-  }
+});
+
+// =====================================================
+// NOTIFICACIONES PUSH (opcional)
+// =====================================================
+self.addEventListener('push', (event) => {
+    const options = {
+        body: event.data.text(),
+        icon: '/icon-192.png',
+        badge: '/icon-192.png',
+        vibrate: [200, 100, 200],
+        data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+        },
+        actions: [
+            { action: 'explore', title: 'Ver tienda', icon: '👟' },
+            { action: 'close', title: 'Cerrar', icon: '❌' }
+        ]
+    };
+
+    event.waitUntil(
+        self.registration.showNotification('👟 HORMA', options)
+    );
+});
+
+self.addEventListener('notificationclick', (event) => {
+    event.notification.close();
+
+    if (event.action === 'explore') {
+        event.waitUntil(
+            clients.openWindow('/')
+        );
+    }
 });
