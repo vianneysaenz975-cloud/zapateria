@@ -7,9 +7,16 @@
     <meta name="description" content="Calzado deportivo y casual de las mejores marcas: Jordan, Nike, Puma y Adidas.">
     <meta name="theme-color" content="#1a1a2e">
 
-    <!-- ====== ICONO APP ====== -->
+    <!-- ====== MANIFEST ====== -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- ====== ICONOS ====== -->
     <link rel="icon" type="image/png" href="icon-192.png">
     <link rel="apple-touch-icon" href="icon-192.png">
+
+    <!-- ====== META PWA ====== -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -850,11 +857,11 @@
             .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .btn-install { 
                 padding: 0.3rem 0.8rem; 
-                font-size: 0.7rem; 
+                font-size: 0.65rem; 
             }
             .btn-install img {
-                width: 18px;
-                height: 18px;
+                width: 16px;
+                height: 16px;
             }
         }
     </style>
@@ -874,7 +881,7 @@
     <div class="header-actions">
         <!-- ====== BOTÓN INSTALAR ====== -->
         <button id="btn-install" class="btn-install">
-            <img src="icon-192.png" alt="Icono app">
+            <img src="icon-192.png" alt="Icono app" id="install-icon">
             Instalar App
         </button>
 
@@ -909,23 +916,15 @@
                 <div class="glow-ring"></div>
                 <!-- SVG Hero Shoe — Air Jordan estilo -->
                 <svg class="hero-shoe-svg" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Suela -->
                     <ellipse cx="260" cy="270" rx="210" ry="28" fill="#1a0a0a" opacity="0.6"/>
-                    <!-- Outsole -->
                     <path d="M60 255 Q65 275 120 282 L390 282 Q445 275 460 255 L450 240 Q430 248 260 252 Q90 248 70 240 Z" fill="#0d0d0d"/>
-                    <!-- Midsole blanca -->
                     <path d="M70 240 Q90 250 260 254 Q430 250 450 240 L445 222 Q420 235 260 238 Q100 235 75 222 Z" fill="#e8e0d8"/>
                     <path d="M75 222 Q100 235 260 238 Q420 235 445 222 L440 208 Q415 220 260 224 Q105 220 80 208 Z" fill="#d4ccc4"/>
-                    <!-- Parte inferior zapato (upper base) -->
                     <path d="M80 208 Q105 220 260 224 Q415 220 440 208 L435 175 Q410 190 260 195 Q110 190 85 175 Z" fill="#c8102e"/>
-                    <!-- Cuerpo principal -->
                     <path d="M85 175 Q110 190 260 195 Q410 190 435 175 L420 120 Q395 140 320 148 L320 90 Q310 82 290 80 L240 80 Q180 82 160 100 L85 175 Z" fill="#c8102e"/>
-                    <!-- Panel lateral blanco -->
                     <path d="M160 100 Q180 85 230 82 L230 145 Q185 148 150 155 Z" fill="#ffffff" opacity="0.9"/>
-                    <!-- Lengüeta -->
                     <path d="M230 82 L290 80 L295 50 Q280 44 265 43 Q250 43 235 50 Z" fill="#c8102e"/>
                     <path d="M240 68 L280 66 L282 54 Q265 50 258 50 Q250 50 238 54 Z" fill="#ffffff" opacity="0.7"/>
-                    <!-- Ojales y cordones -->
                     <line x1="232" y1="88" x2="288" y2="86" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
                     <line x1="231" y1="102" x2="287" y2="100" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
                     <line x1="230" y1="116" x2="286" y2="114" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
@@ -938,19 +937,12 @@
                     <circle cx="286" cy="114" r="4" fill="#e8e0d8"/>
                     <circle cx="229" cy="130" r="4" fill="#e8e0d8"/>
                     <circle cx="285" cy="128" r="4" fill="#e8e0d8"/>
-                    <!-- Talón panel -->
                     <path d="M380 130 Q420 128 435 145 L435 175 Q415 168 380 165 Z" fill="#8b0000"/>
-                    <!-- Logo zona -->
                     <path d="M320 148 L420 130 L435 175 L410 185 Z" fill="#a00020"/>
-                    <!-- Swoosh-style decoración -->
                     <path d="M155 158 Q200 148 260 146 Q320 145 370 150" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.35"/>
-                    <!-- Puntera refuerzo -->
                     <path d="M85 175 Q95 185 115 192 L120 165 Q105 160 90 162 Z" fill="#a00020"/>
-                    <!-- Texto HORMA en talón -->
                     <text x="395" y="168" font-family="'Orbitron',sans-serif" font-size="11" font-weight="900" fill="white" opacity="0.6" transform="rotate(-5,395,168)">HORMA</text>
-                    <!-- Sombra zapato -->
                     <ellipse cx="260" cy="285" rx="195" ry="12" fill="black" opacity="0.35"/>
-                    <!-- Destellos -->
                     <circle cx="170" cy="110" r="5" fill="white" opacity="0.25"/>
                     <circle cx="155" cy="130" r="3" fill="white" opacity="0.15"/>
                 </svg>
@@ -1032,7 +1024,7 @@
     'use strict';
 
     /* =====================================================
-       SVG SHOES — inline, sin dependencia de red
+       SVG SHOES — inline
        ===================================================== */
     const svgs = {
         jordan1: `<svg viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1265,7 +1257,7 @@
     }
 
     /* =====================================================
-       SELECCIÓN DE TALLA (delegación sobre #product-grid)
+       SELECCIÓN DE TALLA
        ===================================================== */
     grid.addEventListener('click', function (e) {
         const chip = e.target.closest('.size-chip');
@@ -1304,7 +1296,7 @@
     });
 
     /* =====================================================
-       CARRITO — agregar
+       CARRITO
        ===================================================== */
     function addToCart(pid, size, btnEl) {
         const p = products.find(x => x.id === pid);
@@ -1331,9 +1323,6 @@
         updateCartUI();
     }
 
-    /* =====================================================
-       CARRITO — quitar / qty
-       ===================================================== */
     function removeFromCart(idx) {
         const name = cart[idx].name;
         cart.splice(idx, 1);
@@ -1347,9 +1336,6 @@
         updateCartUI();
     }
 
-    /* =====================================================
-       CARRITO — UI
-       ===================================================== */
     function updateCartUI() {
         const totalItems = cart.reduce((s, c) => s + c.qty, 0);
         const totalPrice = cart.reduce((s, c) => s + c.price * c.qty, 0);
@@ -1451,12 +1437,26 @@
     });
 
     /* =====================================================
+       SERVICE WORKER
+       ===================================================== */
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(reg => {
+                console.log('✅ Service Worker registrado:', reg);
+            })
+            .catch(err => {
+                console.warn('❌ Error registrando Service Worker:', err);
+            });
+    }
+
+    /* =====================================================
        BOTÓN INSTALAR (PWA)
        ===================================================== */
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
         btnInstall.style.display = 'flex';
+        console.log('🎯 Evento beforeinstallprompt disparado ✅');
     });
 
     btnInstall.addEventListener('click', async () => {
@@ -1464,15 +1464,28 @@
             deferredPrompt.prompt();
             const result = await deferredPrompt.userChoice;
             if (result.outcome === 'accepted') {
+                console.log('✅ Usuario aceptó la instalación');
                 btnInstall.style.display = 'none';
+            } else {
+                console.log('❌ Usuario rechazó la instalación');
             }
             deferredPrompt = null;
+        } else {
+            console.warn('⚠️ No hay prompt pendiente');
         }
     });
 
     window.addEventListener('appinstalled', () => {
+        console.log('✅ App instalada correctamente');
         btnInstall.style.display = 'none';
     });
+
+    /* =====================================================
+       DEBUG - Verificar estado de PWA
+       ===================================================== */
+    console.log('🔍 Verificando PWA...');
+    console.log('📄 manifest.json:', document.querySelector('link[rel="manifest"]')?.href || 'No encontrado');
+    console.log('📄 Service Worker soportado:', 'serviceWorker' in navigator);
 
     /* =====================================================
        INICIALIZAR
