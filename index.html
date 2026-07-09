@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="es-SV">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>HORMA — Sneaker Culture</title>
+    <meta name="description" content="Calzado deportivo y casual de las mejores marcas: Jordan, Nike, Puma y Adidas.">
+    <meta name="theme-color" content="#1a1a2e">
+
+    <!-- ====== ICONO APP ====== -->
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0a0a15;
+            --bg-card: #14142a;
+            --text-primary: #ffffff;
+            --text-secondary: #8888b8;
+            --accent-jordan: #c8102e;
+            --accent-nike: #7ac142;
+            --accent-puma: #e31b23;
+            --glow-jordan: 0 0 40px rgba(200,16,46,0.4);
+            --shadow-card: 0 20px 60px rgba(0,0,0,0.8);
+            --radius: 20px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-jordan); border-radius: 4px; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-3deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(200,16,46,0.2); }
+            50% { box-shadow: 0 0 60px rgba(200,16,46,0.6); }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(3deg); }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes toastProgress {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+        @keyframes cartBump {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.3); }
+            60% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------- HEADER ---------- */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 2.5rem;
+            background: rgba(10,10,21,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            letter-spacing: 0.1em;
+        }
+        .brand-stamp {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent-jordan), #8b0000);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #fff;
+            box-shadow: 0 0 30px rgba(200,16,46,0.4);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .brand-stamp::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(200,16,46,0.3);
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        .brand-stamp:hover { transform: scale(1.1) rotate(20deg); }
+        .brand span {
+            background: linear-gradient(90deg, #fff, var(--accent-jordan), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 3s ease infinite;
+        }
+        .site-nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        .site-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .site-nav a::before {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-jordan);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .site-nav a:hover { color: #fff; }
+        .site-nav a:hover::before { width: 100%; }
+        .header-actions { 
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+        }
+
+        /* ====== BOTÓN INSTALAR ====== */
+        .btn-install {
+            display: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #7ac142, #27ae60);
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            box-shadow: 0 4px 20px rgba(122,193,66,0.3);
+        }
+        .btn-install:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(122,193,66,0.5);
+        }
+        .btn-install img {
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+        }
+
+        .btn-cart {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .btn-cart:hover {
+            background: var(--accent-jordan);
+            transform: scale(1.1) rotate(-10deg);
+            box-shadow: 0 0 40px rgba(200,16,46,0.4);
+        }
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--accent-jordan);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            min-width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(200,16,46,0.5);
+            transition: all 0.3s ease;
+        }
+        .cart-count.bump { animation: cartBump 0.5s ease; }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(200,16,46,0.15), transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(122,193,66,0.05), transparent 60%);
+            pointer-events: none;
+        }
+        .hero-bg-text {
+            position: absolute;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20vw;
+            font-weight: 900;
+            color: rgba(255,255,255,0.02);
+            letter-spacing: 0.1em;
+            pointer-events: none;
+            user-select: none;
+        }
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-copy { display: flex; flex-direction: column; justify-content: center; }
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(200,16,46,0.2), rgba(200,16,46,0.05));
+            border: 1px solid rgba(200,16,46,0.3);
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-jordan);
+            width: fit-content;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3.5rem, 7vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent-jordan), #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero h1 .highlight2 {
+            background: linear-gradient(135deg, var(--accent-nike), #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-lede {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 480px;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn {
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .btn:hover::after { transform: rotate(45deg) translateX(100%); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-jordan), #8b0000);
+            color: #fff;
+            box-shadow: 0 5px 30px rgba(200,16,46,0.4);
+        }
+        .btn-primary:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 15px 50px rgba(200,16,46,0.6); }
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .btn-outline:hover { border-color: var(--accent-jordan); background: rgba(200,16,46,0.15); transform: translateY(-5px); }
+
+        /* Hero image — SVG shoe illustration */
+        .hero-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+        .hero-image .image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+        }
+        .hero-image .glow-ring {
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(200,16,46,0.2), transparent 70%);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        .hero-shoe-svg {
+            width: 100%;
+            height: auto;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 30px 60px rgba(200,16,46,0.4));
+        }
+
+        /* ---------- BRANDS BAR ---------- */
+        .brands-bar {
+            padding: 1.5rem 2.5rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(20,20,42,0.6);
+            backdrop-filter: blur(10px);
+        }
+        .brands-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .brand-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            opacity: 0.6;
+            transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid transparent;
+            cursor: default;
+        }
+        .brand-item:hover { opacity: 1; transform: scale(1.1) translateY(-3px); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); }
+        .brand-item .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.6rem; }
+        .brand-item .brand-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .brand-item.jordan .logo { color: var(--accent-jordan); }
+        .brand-item.jordan .brand-dot { background: var(--accent-jordan); }
+        .brand-item.nike .logo { color: var(--accent-nike); }
+        .brand-item.nike .brand-dot { background: var(--accent-nike); }
+        .brand-item.puma .logo { color: var(--accent-puma); }
+        .brand-item.puma .brand-dot { background: var(--accent-puma); }
+        .brand-item.adidas .logo { color: #fff; }
+        .brand-item.adidas .brand-dot { background: #fff; }
+
+        /* ---------- PRODUCTOS ---------- */
+        .productos {
+            padding: 5rem 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .section-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 3vw, 3rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--text-secondary), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 4s ease infinite;
+        }
+        .section-header .subtitle { color: var(--text-secondary); font-size: 0.9rem; }
+        .filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .filter-tab {
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .filter-tab:hover { border-color: var(--accent-jordan); color: #fff; transform: translateY(-2px); }
+        .filter-tab.active {
+            background: linear-gradient(135deg, var(--accent-jordan), #8b0000);
+            border-color: var(--accent-jordan);
+            color: #fff;
+            box-shadow: 0 5px 30px rgba(200,16,46,0.3);
+            transform: translateY(-2px);
+        }
+        .filter-tab[data-filter="nike"].active { background: linear-gradient(135deg, var(--accent-nike), #27ae60); box-shadow: 0 5px 30px rgba(122,193,66,0.3); }
+        .filter-tab[data-filter="puma"].active { background: linear-gradient(135deg, var(--accent-puma), #b7151b); box-shadow: 0 5px 30px rgba(227,27,35,0.3); }
+        .filter-tab[data-filter="adidas"].active { background: linear-gradient(135deg, #333, #000); box-shadow: 0 5px 30px rgba(255,255,255,0.1); }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* ---------- TARJETA ---------- */
+        .product-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.5s ease both;
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(200,16,46,0.08), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        .product-card:hover { transform: translateY(-15px) scale(1.02); border-color: rgba(200,16,46,0.3); box-shadow: var(--shadow-card), var(--glow-jordan); }
+        .product-card:hover::before { opacity: 1; }
+
+        .product-card .brand-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(200,16,46,0.2);
+            color: var(--accent-jordan);
+            border: 1px solid rgba(200,16,46,0.2);
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+        .product-card .brand-tag.nike { background: rgba(122,193,66,0.2); color: var(--accent-nike); border-color: rgba(122,193,66,0.2); }
+        .product-card .brand-tag.puma { background: rgba(227,27,35,0.2); color: var(--accent-puma); border-color: rgba(227,27,35,0.2); }
+        .product-card .brand-tag.adidas { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.1); }
+
+        /* SVG product display */
+        .product-image {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.04), transparent);
+        }
+        .product-image svg {
+            width: 85%;
+            height: 85%;
+            transition: all 0.7s cubic-bezier(0.34,1.56,0.64,1);
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+        }
+        .product-card:hover .product-image svg {
+            transform: scale(1.12) rotate(-5deg);
+            filter: drop-shadow(0 20px 50px rgba(200,16,46,0.35));
+        }
+
+        .product-card .product-name { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.2rem; }
+        .product-card .product-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem; }
+        .product-card .product-price { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--accent-jordan); }
+
+        .size-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 0.8rem 0; }
+        .size-chip {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 3;
+        }
+        .size-chip:hover { border-color: var(--accent-jordan); color: #fff; transform: scale(1.15) translateY(-2px); background: rgba(200,16,46,0.1); }
+        .size-chip.is-selected {
+            background: var(--accent-jordan);
+            border-color: var(--accent-jordan);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(200,16,46,0.5);
+            transform: scale(1.1);
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, var(--accent-jordan), #8b0000);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            z-index: 3;
+            overflow: hidden;
+        }
+        .btn-add::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.12), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .btn-add:hover::after { transform: rotate(45deg) translateX(100%); }
+        .btn-add:hover:not(:disabled) { transform: scale(1.03); box-shadow: 0 8px 30px rgba(200,16,46,0.4); }
+        .btn-add:disabled { opacity: 0.45; cursor: not-allowed; transform: none !important; }
+        .btn-add.added { background: linear-gradient(135deg, #2ecc71, #27ae60) !important; animation: popIn 0.5s ease; }
+        .btn-add.shake { animation: shake 0.5s ease; }
+
+        /* ---------- CARRITO ---------- */
+        .cart-panel {
+            position: fixed;
+            top: 0; right: 0;
+            height: 100%;
+            width: min(440px, 92vw);
+            background: var(--bg-card);
+            border-left: 1px solid rgba(255,255,255,0.05);
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            padding: 1.8rem;
+            box-shadow: -20px 0 80px rgba(0,0,0,0.9);
+        }
+        .cart-panel.is-open { transform: translateX(0); }
+        .cart-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .cart-head h3 { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .cart-head h3 span { font-size: 0.8rem; color: var(--text-secondary); font-weight: 400; }
+        .btn-icon {
+            background: none; border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.3rem;
+            border-radius: 50%;
+        }
+        .btn-icon:hover { color: var(--accent-jordan); background: rgba(200,16,46,0.1); transform: rotate(90deg); }
+        .cart-items { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; padding-right: 0.5rem; }
+        .cart-items::-webkit-scrollbar { width: 4px; }
+        .cart-items::-webkit-scrollbar-thumb { background: var(--accent-jordan); border-radius: 4px; }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.05);
+            animation: slideInRight 0.4s ease;
+            transition: all 0.3s ease;
+        }
+        .cart-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(200,16,46,0.2); }
+        .cart-item .item-info { flex: 1; }
+        .cart-item .item-name { font-weight: 600; font-size: 0.9rem; }
+        .cart-item .item-size { font-size: 0.75rem; color: var(--text-secondary); }
+        .cart-item .item-price { font-weight: 700; color: var(--accent-jordan); font-size: 1.05rem; }
+        .cart-item .item-qty { display: flex; align-items: center; gap: 0.3rem; margin: 0 0.5rem; }
+        .cart-item .item-qty button {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700;
+        }
+        .cart-item .item-qty button:hover { background: var(--accent-jordan); border-color: var(--accent-jordan); color: #fff; transform: scale(1.1); }
+        .cart-item .item-qty span { min-width: 24px; text-align: center; font-weight: 700; }
+        .cart-item .item-remove {
+            background: none; border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.3rem 0.5rem;
+            border-radius: 50%;
+        }
+        .cart-item .item-remove:hover { color: var(--accent-jordan); background: rgba(200,16,46,0.1); transform: scale(1.1); }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.2rem 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+        }
+        .cart-total strong { color: var(--accent-jordan); font-size: 1.5rem; }
+        .btn-checkout {
+            padding: 1rem;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, var(--accent-jordan), #8b0000);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-checkout::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .btn-checkout:hover::after { transform: rotate(45deg) translateX(100%); }
+        .btn-checkout:hover { transform: scale(1.03); box-shadow: 0 10px 40px rgba(200,16,46,0.4); }
+        .cart-empty { color: var(--text-secondary); text-align: center; padding: 3rem 0; }
+        .cart-empty .empty-icon { font-size: 4rem; margin-bottom: 1rem; display: block; opacity: 0.3; }
+        .cart-empty .empty-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            z-index: 150;
+            backdrop-filter: blur(10px);
+        }
+        .cart-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+        /* ---------- TOAST ---------- */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 300;
+            pointer-events: none;
+        }
+        .toast {
+            background: rgba(20,20,42,0.97);
+            border: 1px solid rgba(200,16,46,0.25);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            color: #fff;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            pointer-events: auto;
+            position: relative;
+            min-width: 220px;
+            justify-content: center;
+            white-space: nowrap;
+        }
+        .toast.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+        .toast .toast-progress {
+            position: absolute;
+            bottom: 0; left: 0;
+            height: 3px;
+            background: var(--accent-jordan);
+            border-radius: 0 0 50px 50px;
+            animation: toastProgress 2.5s linear forwards;
+        }
+
+        /* ---------- FOOTER ---------- */
+        .site-footer {
+            padding: 3rem 2.5rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            background: var(--bg-card);
+            margin-top: 2rem;
+        }
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        .footer-grid h4 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .footer-grid p { color: var(--text-secondary); font-size: 0.85rem; }
+        .footer-grid a { color: var(--text-secondary); text-decoration: none; }
+        .footer-grid a:hover { color: var(--accent-jordan); }
+        .footer-fine { text-align: center; color: var(--text-secondary); font-size: 0.75rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 1024px) {
+            .hero-inner { grid-template-columns: 1fr; text-align: center; }
+            .hero-copy { align-items: center; }
+            .hero-lede { max-width: 100%; }
+            .hero-actions { justify-content: center; }
+            .site-nav { display: none; }
+            .hero-bg-text { display: none; }
+        }
+        @media (max-width: 640px) {
+            .site-header { padding: 0.8rem 1rem; }
+            .hero { padding: 2rem 1rem; min-height: auto; }
+            .productos { padding: 2rem 1rem; }
+            .brands-bar { padding: 1rem; }
+            .product-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.8rem; }
+            .section-header { flex-direction: column; align-items: flex-start; }
+            .filter-tabs { width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.5rem; gap: 0.3rem; }
+            .filter-tab { white-space: nowrap; font-size: 0.7rem; padding: 0.4rem 1rem; }
+            .cart-panel { width: 100%; padding: 1.2rem; }
+            .brands-bar-inner { gap: 1rem; }
+            .brand-item { font-size: 0.85rem; padding: 0.3rem 0.8rem; }
+            .brand-item .logo { font-size: 1.2rem; }
+            .site-footer { padding: 2rem 1rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .btn-install { 
+                padding: 0.3rem 0.8rem; 
+                font-size: 0.7rem; 
+            }
+            .btn-install img {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="#hero" class="brand">
+        <div class="brand-stamp">H</div>
+        <span>HORMA</span>
+    </a>
+    <nav class="site-nav">
+        <a href="#productos">Catálogo</a>
+        <a href="#brands">Marcas</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="header-actions">
+        <!-- ====== BOTÓN INSTALAR ====== -->
+        <button id="btn-install" class="btn-install">
+            <img src="icon-192.png" alt="Icono app">
+            Instalar App
+        </button>
+
+        <button id="btn-cart" class="btn-cart" aria-label="Abrir carrito">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            <span id="cart-count" class="cart-count">0</span>
+        </button>
+    </div>
+</header>
+
+<section id="hero" class="hero">
+    <div class="hero-bg-text">SNEAKER</div>
+    <div class="hero-inner">
+        <div class="hero-copy">
+            <div class="hero-badge">🔥 Edición Limitada 2026</div>
+            <h1>
+                <span class="highlight">STREET</span><br>
+                <span class="highlight2">WEAR</span>
+            </h1>
+            <p class="hero-lede">Las mejores marcas del mundo en un solo lugar. <strong style="color:#fff;">Jordan</strong>, <strong style="color:var(--accent-nike);">Nike</strong>, <strong style="color:var(--accent-puma);">Puma</strong> y <strong style="color:#fff;">Adidas</strong>. Encontrá el calzado que define tu estilo.</p>
+            <div class="hero-actions">
+                <a href="#productos" class="btn btn-primary">Ver catálogo</a>
+                <a href="#brands" class="btn btn-outline">Explorar marcas</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="image-wrapper">
+                <div class="glow-ring"></div>
+                <!-- SVG Hero Shoe — Air Jordan estilo -->
+                <svg class="hero-shoe-svg" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Suela -->
+                    <ellipse cx="260" cy="270" rx="210" ry="28" fill="#1a0a0a" opacity="0.6"/>
+                    <!-- Outsole -->
+                    <path d="M60 255 Q65 275 120 282 L390 282 Q445 275 460 255 L450 240 Q430 248 260 252 Q90 248 70 240 Z" fill="#0d0d0d"/>
+                    <!-- Midsole blanca -->
+                    <path d="M70 240 Q90 250 260 254 Q430 250 450 240 L445 222 Q420 235 260 238 Q100 235 75 222 Z" fill="#e8e0d8"/>
+                    <path d="M75 222 Q100 235 260 238 Q420 235 445 222 L440 208 Q415 220 260 224 Q105 220 80 208 Z" fill="#d4ccc4"/>
+                    <!-- Parte inferior zapato (upper base) -->
+                    <path d="M80 208 Q105 220 260 224 Q415 220 440 208 L435 175 Q410 190 260 195 Q110 190 85 175 Z" fill="#c8102e"/>
+                    <!-- Cuerpo principal -->
+                    <path d="M85 175 Q110 190 260 195 Q410 190 435 175 L420 120 Q395 140 320 148 L320 90 Q310 82 290 80 L240 80 Q180 82 160 100 L85 175 Z" fill="#c8102e"/>
+                    <!-- Panel lateral blanco -->
+                    <path d="M160 100 Q180 85 230 82 L230 145 Q185 148 150 155 Z" fill="#ffffff" opacity="0.9"/>
+                    <!-- Lengüeta -->
+                    <path d="M230 82 L290 80 L295 50 Q280 44 265 43 Q250 43 235 50 Z" fill="#c8102e"/>
+                    <path d="M240 68 L280 66 L282 54 Q265 50 258 50 Q250 50 238 54 Z" fill="#ffffff" opacity="0.7"/>
+                    <!-- Ojales y cordones -->
+                    <line x1="232" y1="88" x2="288" y2="86" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
+                    <line x1="231" y1="102" x2="287" y2="100" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
+                    <line x1="230" y1="116" x2="286" y2="114" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
+                    <line x1="229" y1="130" x2="285" y2="128" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
+                    <circle cx="232" cy="88" r="4" fill="#e8e0d8"/>
+                    <circle cx="288" cy="86" r="4" fill="#e8e0d8"/>
+                    <circle cx="231" cy="102" r="4" fill="#e8e0d8"/>
+                    <circle cx="287" cy="100" r="4" fill="#e8e0d8"/>
+                    <circle cx="230" cy="116" r="4" fill="#e8e0d8"/>
+                    <circle cx="286" cy="114" r="4" fill="#e8e0d8"/>
+                    <circle cx="229" cy="130" r="4" fill="#e8e0d8"/>
+                    <circle cx="285" cy="128" r="4" fill="#e8e0d8"/>
+                    <!-- Talón panel -->
+                    <path d="M380 130 Q420 128 435 145 L435 175 Q415 168 380 165 Z" fill="#8b0000"/>
+                    <!-- Logo zona -->
+                    <path d="M320 148 L420 130 L435 175 L410 185 Z" fill="#a00020"/>
+                    <!-- Swoosh-style decoración -->
+                    <path d="M155 158 Q200 148 260 146 Q320 145 370 150" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.35"/>
+                    <!-- Puntera refuerzo -->
+                    <path d="M85 175 Q95 185 115 192 L120 165 Q105 160 90 162 Z" fill="#a00020"/>
+                    <!-- Texto HORMA en talón -->
+                    <text x="395" y="168" font-family="'Orbitron',sans-serif" font-size="11" font-weight="900" fill="white" opacity="0.6" transform="rotate(-5,395,168)">HORMA</text>
+                    <!-- Sombra zapato -->
+                    <ellipse cx="260" cy="285" rx="195" ry="12" fill="black" opacity="0.35"/>
+                    <!-- Destellos -->
+                    <circle cx="170" cy="110" r="5" fill="white" opacity="0.25"/>
+                    <circle cx="155" cy="130" r="3" fill="white" opacity="0.15"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="brands" class="brands-bar">
+    <div class="brands-bar-inner">
+        <div class="brand-item jordan"><span class="logo">▲</span><span>JORDAN</span><span class="brand-dot"></span></div>
+        <div class="brand-item nike"><span class="logo">✓</span><span>NIKE</span><span class="brand-dot"></span></div>
+        <div class="brand-item puma"><span class="logo">►</span><span>PUMA</span><span class="brand-dot"></span></div>
+        <div class="brand-item adidas"><span class="logo">◄</span><span>ADIDAS</span><span class="brand-dot"></span></div>
+    </div>
+</section>
+
+<section id="productos" class="productos">
+    <div class="section-header">
+        <div>
+            <h2>Catálogo</h2>
+            <p class="subtitle">Encontrá tu próximo par favorito</p>
+        </div>
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">Todos</button>
+            <button class="filter-tab" data-filter="jordan">Jordan</button>
+            <button class="filter-tab" data-filter="nike">Nike</button>
+            <button class="filter-tab" data-filter="puma">Puma</button>
+            <button class="filter-tab" data-filter="adidas">Adidas</button>
+        </div>
+    </div>
+    <div id="product-grid" class="product-grid"></div>
+</section>
+
+<footer id="contacto" class="site-footer">
+    <div class="footer-grid">
+        <div>
+            <h4>HORMA</h4>
+            <p>Sneaker culture desde 2024</p>
+        </div>
+        <div>
+            <p style="font-weight:600;margin-bottom:0.3rem;">Visítanos</p>
+            <p>2ª Calle Poniente, San Salvador</p>
+            <p>Lun–Sáb, 9:00 am – 7:00 pm</p>
+        </div>
+        <div>
+            <p style="font-weight:600;margin-bottom:0.3rem;">Contacto</p>
+            <p><a href="tel:+50322000000">+503 2200 0000</a></p>
+            <p><a href="mailto:info@horma.sv">info@horma.sv</a></p>
+        </div>
+    </div>
+    <p class="footer-fine">© 2026 HORMA — Todos los derechos reservados</p>
+</footer>
+
+<aside id="cart-panel" class="cart-panel">
+    <div class="cart-head">
+        <h3>🛒 Carrito <span id="cart-item-count-label">(0 items)</span></h3>
+        <button id="btn-cart-close" class="btn-icon">✕</button>
+    </div>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-total">
+        <span>Total</span>
+        <strong id="cart-total-amount">$0.00</strong>
+    </div>
+    <button id="btn-checkout" class="btn-checkout">Comprar por WhatsApp 📲</button>
+</aside>
+<div id="cart-overlay" class="cart-overlay"></div>
+
+<div class="toast-container">
+    <div id="toast" class="toast">
+        <span id="toast-icon">✅</span>
+        <span id="toast-message">¡Agregado al carrito!</span>
+        <div class="toast-progress"></div>
+    </div>
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    /* =====================================================
+       SVG SHOES — inline, sin dependencia de red
+       ===================================================== */
+    const svgs = {
+        jordan1: `<svg viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M55 185 Q60 200 100 208 L320 208 Q360 200 365 185 L358 172 Q340 180 200 183 Q65 180 62 172 Z" fill="#0d0d0d"/>
+          <path d="M62 172 Q80 180 200 183 Q325 180 358 172 L352 157 Q330 166 200 169 Q75 166 68 157 Z" fill="#e8e0d8"/>
+          <path d="M68 157 Q90 166 200 169 Q315 166 352 157 L346 132 Q324 143 200 146 Q80 143 74 132 Z" fill="#c8102e"/>
+          <path d="M74 132 Q96 143 200 146 Q308 143 346 132 L336 92 Q314 108 255 114 L255 68 Q246 62 230 61 L185 61 Q138 63 122 78 L74 132 Z" fill="#c8102e"/>
+          <path d="M122 78 Q138 65 178 62 L178 110 Q143 113 115 119 Z" fill="#ffffff" opacity="0.92"/>
+          <path d="M178 62 L230 61 L234 38 Q218 33 208 33 Q196 33 182 38 Z" fill="#c8102e"/>
+          <path d="M185 52 L222 51 L224 41 Q210 37 204 37 Q197 37 187 41 Z" fill="#ffffff" opacity="0.7"/>
+          <line x1="180" y1="67" x2="228" y2="65" stroke="#fff" stroke-width="2.2" opacity="0.8"/>
+          <line x1="179" y1="79" x2="227" y2="77" stroke="#fff" stroke-width="2.2" opacity="0.8"/>
+          <line x1="178" y1="91" x2="226" y2="89" stroke="#fff" stroke-width="2.2" opacity="0.8"/>
+          <line x1="177" y1="103" x2="225" y2="101" stroke="#fff" stroke-width="2.2" opacity="0.8"/>
+          <circle cx="180" cy="67" r="3.5" fill="#e8e0d8"/><circle cx="228" cy="65" r="3.5" fill="#e8e0d8"/>
+          <circle cx="179" cy="79" r="3.5" fill="#e8e0d8"/><circle cx="227" cy="77" r="3.5" fill="#e8e0d8"/>
+          <circle cx="178" cy="91" r="3.5" fill="#e8e0d8"/><circle cx="226" cy="89" r="3.5" fill="#e8e0d8"/>
+          <circle cx="177" cy="103" r="3.5" fill="#e8e0d8"/><circle cx="225" cy="101" r="3.5" fill="#e8e0d8"/>
+          <path d="M295 108 Q336 100 346 118 L346 132 Q326 126 295 123 Z" fill="#8b0000"/>
+          <path d="M116 119 Q165 110 200 108 Q240 107 280 111" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.3"/>
+          <path d="M74 132 Q82 140 96 146 L100 124 Q87 120 76 122 Z" fill="#a00020"/>
+          <text x="308" y="126" font-family="monospace" font-size="9" font-weight="900" fill="white" opacity="0.55" transform="rotate(-4,308,126)">HORMA</text>
+          <ellipse cx="200" cy="215" rx="155" ry="9" fill="black" opacity="0.3"/>
+        </svg>`,
+
+        airmax: `<svg viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 192 Q55 208 105 215 L315 215 Q365 208 370 192 L362 178 Q342 187 200 190 Q60 187 58 178 Z" fill="#111"/>
+          <path d="M58 178 Q75 187 200 190 Q328 187 362 178 L356 160 Q332 170 200 173 Q72 170 64 160 Z" fill="#f0f0f0"/>
+          <ellipse cx="135" cy="172" rx="45" ry="14" fill="#87CEEB" opacity="0.7" stroke="#fff" stroke-width="1"/>
+          <ellipse cx="135" cy="172" rx="38" ry="10" fill="#5BA8D0" opacity="0.5"/>
+          <path d="M64 160 Q86 170 200 173 Q318 170 356 160 L348 128 Q326 140 200 143 Q78 140 72 128 Z" fill="#1a1a1a"/>
+          <path d="M72 128 Q94 140 200 143 Q310 140 348 128 L338 90 Q316 106 255 112 L255 66 Q244 58 225 57 L180 57 Q135 59 118 76 L72 128 Z" fill="#1a1a1a"/>
+          <path d="M118 76 Q135 61 172 58 L172 108 Q138 111 110 117 Z" fill="#7ac142" opacity="0.9"/>
+          <path d="M140 118 Q190 104 270 108 Q310 110 340 120" stroke="#7ac142" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M255 66 L225 57 L228 36 Q240 31 248 31 Q258 31 262 36 Z" fill="#333"/>
+          <path d="M230 50 L255 49 L257 39 Q248 35 244 35 Q238 35 232 39 Z" fill="#fff" opacity="0.6"/>
+          <line x1="175" y1="63" x2="253" y2="61" stroke="#fff" stroke-width="2" opacity="0.7"/>
+          <line x1="174" y1="75" x2="252" y2="73" stroke="#fff" stroke-width="2" opacity="0.7"/>
+          <line x1="173" y1="87" x2="251" y2="85" stroke="#fff" stroke-width="2" opacity="0.7"/>
+          <line x1="172" y1="99" x2="250" y2="97" stroke="#fff" stroke-width="2" opacity="0.7"/>
+          <circle cx="175" cy="63" r="3" fill="#ccc"/><circle cx="253" cy="61" r="3" fill="#ccc"/>
+          <circle cx="174" cy="75" r="3" fill="#ccc"/><circle cx="252" cy="73" r="3" fill="#ccc"/>
+          <circle cx="173" cy="87" r="3" fill="#ccc"/><circle cx="251" cy="85" r="3" fill="#ccc"/>
+          <circle cx="172" cy="99" r="3" fill="#ccc"/><circle cx="250" cy="97" r="3" fill="#ccc"/>
+          <text x="300" y="118" font-family="monospace" font-size="9" fill="white" opacity="0.4" transform="rotate(-3,300,118)">HORMA</text>
+          <ellipse cx="200" cy="222" rx="155" ry="8" fill="black" opacity="0.25"/>
+        </svg>`,
+
+        pumaRSX: `<svg viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M45 198 Q50 215 108 222 L310 222 Q368 215 373 198 L364 183 Q340 193 200 196 Q62 193 56 183 Z" fill="#111"/>
+          <path d="M56 183 Q74 193 200 196 Q330 193 364 183 L358 165 Q334 175 200 178 Q70 175 62 165 Z" fill="#ff6b00"/>
+          <path d="M62 165 Q82 175 200 178 Q322 175 358 165 L352 148 Q326 158 200 161 Q78 158 68 148 Z" fill="#e31b23"/>
+          <path d="M68 148 Q90 158 200 161 Q314 158 352 148 L342 110 Q318 126 252 132 L252 72 Q240 64 220 63 L175 63 Q128 65 110 83 L68 148 Z" fill="#ffffff"/>
+          <path d="M110 83 Q130 67 170 64 L170 118 Q132 121 102 127 Z" fill="#cccccc"/>
+          <path d="M180 130 Q220 124 280 126 Q320 127 345 135" stroke="#ff6b00" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M182 142 Q222 136 285 138" stroke="#e31b23" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M252 72 L220 63 L223 42 Q235 37 244 37 Q254 37 258 42 Z" fill="#e31b23"/>
+          <path d="M228 56 L250 55 L252 44 Q244 40 240 40 Q234 40 228 44 Z" fill="#fff" opacity="0.7"/>
+          <line x1="172" y1="69" x2="250" y2="67" stroke="#333" stroke-width="2" opacity="0.6"/>
+          <line x1="171" y1="81" x2="249" y2="79" stroke="#333" stroke-width="2" opacity="0.6"/>
+          <line x1="170" y1="93" x2="248" y2="91" stroke="#333" stroke-width="2" opacity="0.6"/>
+          <line x1="169" y1="105" x2="247" y2="103" stroke="#333" stroke-width="2" opacity="0.6"/>
+          <circle cx="172" cy="69" r="3" fill="#ff6b00"/><circle cx="250" cy="67" r="3" fill="#ff6b00"/>
+          <circle cx="171" cy="81" r="3" fill="#ff6b00"/><circle cx="249" cy="79" r="3" fill="#ff6b00"/>
+          <circle cx="170" cy="93" r="3" fill="#ff6b00"/><circle cx="248" cy="91" r="3" fill="#ff6b00"/>
+          <circle cx="169" cy="105" r="3" fill="#ff6b00"/><circle cx="247" cy="103" r="3" fill="#ff6b00"/>
+          <text x="292" y="130" font-family="monospace" font-size="9" fill="#333" opacity="0.5" transform="rotate(-3,292,130)">HORMA</text>
+          <ellipse cx="200" cy="228" rx="155" ry="8" fill="black" opacity="0.28"/>
+        </svg>`,
+
+        ultraboost: `<svg viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M48 195 Q54 212 108 218 L312 218 Q366 212 372 195 L363 180 Q338 190 200 193 Q63 190 57 180 Z" fill="#111"/>
+          <g opacity="0.9">
+            <path d="M57 180 Q74 190 200 193 Q328 190 363 180 L357 162 Q332 172 200 175 Q70 172 63 162 Z" fill="#f5f5f5"/>
+            <polygon points="80,175 88,170 88,179 80,184 72,179 72,170" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
+            <polygon points="96,175 104,170 104,179 96,184 88,179 88,170" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
+            <polygon points="112,175 120,170 120,179 112,184 104,179 104,170" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
+            <polygon points="88,184 96,179 96,188 88,193 80,188 80,179" fill="#e8e8e8" stroke="#ccc" stroke-width="0.5"/>
+            <polygon points="104,184 112,179 112,188 104,193 96,188 96,179" fill="#e8e8e8" stroke="#ccc" stroke-width="0.5"/>
+            <polygon points="128,175 136,170 136,179 128,184 120,179 120,170" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
+          </g>
+          <path d="M63 162 Q84 172 200 175 Q320 172 357 162 L350 142 Q326 153 200 156 Q76 153 70 142 Z" fill="#111"/>
+          <path d="M70 142 Q92 153 200 156 Q312 153 350 142 L340 102 Q318 118 255 124 L255 64 Q242 56 222 55 L177 55 Q130 57 112 75 L70 142 Z" fill="#111"/>
+          <path d="M112 75 Q130 59 172 56 L172 110 Q134 113 105 119 Z" fill="#222"/>
+          <line x1="155" y1="108" x2="185" y2="68" stroke="white" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+          <line x1="175" y1="110" x2="205" y2="70" stroke="white" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+          <line x1="195" y1="112" x2="225" y2="72" stroke="white" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+          <path d="M140 118 Q190 112 255 112 Q310 112 342 120" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.2"/>
+          <path d="M138 130 Q190 124 255 124" stroke="#ffffff" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.15"/>
+          <path d="M255 64 L222 55 L225 34 Q237 29 244 29 Q252 29 256 34 Z" fill="#222"/>
+          <line x1="174" y1="61" x2="253" y2="59" stroke="#fff" stroke-width="2" opacity="0.5"/>
+          <line x1="173" y1="73" x2="252" y2="71" stroke="#fff" stroke-width="2" opacity="0.5"/>
+          <line x1="172" y1="85" x2="251" y2="83" stroke="#fff" stroke-width="2" opacity="0.5"/>
+          <line x1="171" y1="97" x2="250" y2="95" stroke="#fff" stroke-width="2" opacity="0.5"/>
+          <circle cx="174" cy="61" r="3" fill="#555"/><circle cx="253" cy="59" r="3" fill="#555"/>
+          <circle cx="173" cy="73" r="3" fill="#555"/><circle cx="252" cy="71" r="3" fill="#555"/>
+          <circle cx="172" cy="85" r="3" fill="#555"/><circle cx="251" cy="83" r="3" fill="#555"/>
+          <circle cx="171" cy="97" r="3" fill="#555"/><circle cx="250" cy="95" r="3" fill="#555"/>
+          <text x="295" y="120" font-family="monospace" font-size="9" fill="white" opacity="0.35" transform="rotate(-3,295,120)">HORMA</text>
+          <ellipse cx="200" cy="224" rx="155" ry="8" fill="black" opacity="0.28"/>
+        </svg>`,
+
+        jordan3: `<svg viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 190 Q56 207 108 214 L312 214 Q364 207 368 190 L360 176 Q338 185 200 188 Q64 185 60 176 Z" fill="#0d0d0d"/>
+          <path d="M60 176 Q78 185 200 188 Q325 185 360 176 L354 158 Q330 168 200 171 Q73 168 66 158 Z" fill="#e8e0d8"/>
+          <path d="M66 158 Q88 168 200 171 Q318 168 354 158 L348 130 Q325 142 200 145 Q78 142 72 130 Z" fill="#1a1a1a"/>
+          <path d="M72 130 Q95 142 200 145 Q310 142 348 130 L338 92 Q316 108 252 114 L252 66 Q240 58 222 57 L177 57 Q132 59 114 77 L72 130 Z" fill="#ffffff"/>
+          <path d="M114 77 Q132 61 172 58 L172 112 Q132 115 106 121 Z" fill="#1a1a1a"/>
+          <path d="M106 121 Q125 115 155 113" stroke="#555" stroke-width="1.5" fill="none"/>
+          <path d="M148 116 Q195 108 265 112 Q305 114 338 122" stroke="#c8102e" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <ellipse cx="130" cy="162" rx="40" ry="12" fill="#87CEEB" opacity="0.65" stroke="#aaa" stroke-width="1"/>
+          <ellipse cx="130" cy="162" rx="32" ry="8" fill="#5BA8D0" opacity="0.5"/>
+          <path d="M252 66 L222 57 L225 36 Q237 31 244 31 Q252 31 256 36 Z" fill="#1a1a1a"/>
+          <path d="M228 50 L250 49 L252 39 Q244 35 240 35 Q234 35 228 39 Z" fill="#fff" opacity="0.65"/>
+          <line x1="174" y1="63" x2="250" y2="61" stroke="#888" stroke-width="2" opacity="0.7"/>
+          <line x1="173" y1="75" x2="249" y2="73" stroke="#888" stroke-width="2" opacity="0.7"/>
+          <line x1="172" y1="87" x2="248" y2="85" stroke="#888" stroke-width="2" opacity="0.7"/>
+          <line x1="171" y1="99" x2="247" y2="97" stroke="#888" stroke-width="2" opacity="0.7"/>
+          <circle cx="174" cy="63" r="3" fill="#ccc"/><circle cx="250" cy="61" r="3" fill="#ccc"/>
+          <circle cx="173" cy="75" r="3" fill="#ccc"/><circle cx="249" cy="73" r="3" fill="#ccc"/>
+          <circle cx="172" cy="87" r="3" fill="#ccc"/><circle cx="248" cy="85" r="3" fill="#ccc"/>
+          <circle cx="171" cy="99" r="3" fill="#ccc"/><circle cx="247" cy="97" r="3" fill="#ccc"/>
+          <text x="295" y="118" font-family="monospace" font-size="9" fill="white" opacity="0.4" transform="rotate(-3,295,118)">HORMA</text>
+          <ellipse cx="200" cy="220" rx="152" ry="8" fill="black" opacity="0.28"/>
+        </svg>`,
+
+        dunkLow: `<svg viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M52 190 Q58 207 110 214 L310 214 Q362 207 366 190 L358 176 Q336 185 200 188 Q66 185 62 176 Z" fill="#0d0d0d"/>
+          <path d="M62 176 Q80 185 200 188 Q323 185 358 176 L352 158 Q328 168 200 171 Q74 168 68 158 Z" fill="#e8e0d8"/>
+          <path d="M68 158 Q90 168 200 171 Q316 168 352 158 L346 130 Q323 142 200 145 Q80 142 74 130 Z" fill="#1e40af"/>
+          <path d="M74 130 Q97 142 200 145 Q308 142 346 130 L336 92 Q314 108 252 114 L252 66 Q240 58 222 57 L177 57 Q132 59 114 77 L74 130 Z" fill="#1e40af"/>
+          <path d="M114 77 Q132 61 172 58 L172 112 Q130 115 105 121 Z" fill="#ffffff"/>
+          <path d="M172 112 Q215 107 252 108 L252 66 L222 57 Q195 70 172 112 Z" fill="#ffffff"/>
+          <path d="M148 116 Q190 106 262 110 Q302 112 336 120" stroke="#1e3a8a" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M252 66 L222 57 L225 36 Q237 31 244 31 Q252 31 256 36 Z" fill="#1e40af"/>
+          <path d="M228 50 L250 49 L252 39 Q244 35 240 35 Q234 35 228 39 Z" fill="#fff" opacity="0.8"/>
+          <line x1="174" y1="63" x2="250" y2="61" stroke="#1e40af" stroke-width="2.2" opacity="0.8"/>
+          <line x1="173" y1="75" x2="249" y2="73" stroke="#1e40af" stroke-width="2.2" opacity="0.8"/>
+          <line x1="172" y1="87" x2="248" y2="85" stroke="#1e40af" stroke-width="2.2" opacity="0.8"/>
+          <line x1="171" y1="99" x2="247" y2="97" stroke="#1e40af" stroke-width="2.2" opacity="0.8"/>
+          <circle cx="174" cy="63" r="3.5" fill="#e8e0d8"/><circle cx="250" cy="61" r="3.5" fill="#e8e0d8"/>
+          <circle cx="173" cy="75" r="3.5" fill="#e8e0d8"/><circle cx="249" cy="73" r="3.5" fill="#e8e0d8"/>
+          <circle cx="172" cy="87" r="3.5" fill="#e8e0d8"/><circle cx="248" cy="85" r="3.5" fill="#e8e0d8"/>
+          <circle cx="171" cy="99" r="3.5" fill="#e8e0d8"/><circle cx="247" cy="97" r="3.5" fill="#e8e0d8"/>
+          <path d="M295 108 Q336 100 346 118 L346 130 Q326 126 295 123 Z" fill="#1e3a8a"/>
+          <text x="296" y="122" font-family="monospace" font-size="9" fill="white" opacity="0.5" transform="rotate(-3,296,122)">HORMA</text>
+          <ellipse cx="200" cy="220" rx="152" ry="8" fill="black" opacity="0.28"/>
+        </svg>`
+    };
+
+    /* =====================================================
+       PRODUCTOS
+       ===================================================== */
+    const products = [
+        { id: 1, name: 'Air Jordan 1 Retro', desc: 'Edición especial, cuero premium.', price: 220, brand: 'jordan', sizes: [38,39,40,41,42,43], svgKey: 'jordan1' },
+        { id: 2, name: 'Nike Air Max 270', desc: 'Comodidad y estilo en cada paso.', price: 180, brand: 'nike', sizes: [39,40,41,42,43,44], svgKey: 'airmax' },
+        { id: 3, name: 'Puma RS-X', desc: 'Diseño retro-futurista, suela gruesa.', price: 150, brand: 'puma', sizes: [38,39,40,41,42], svgKey: 'pumaRSX' },
+        { id: 4, name: 'Adidas Ultraboost', desc: 'Tecnología Boost, máxima amortiguación.', price: 200, brand: 'adidas', sizes: [39,40,41,42,43], svgKey: 'ultraboost' },
+        { id: 5, name: 'Jordan Why Not?', desc: 'Firma de Russell Westbrook.', price: 195, brand: 'jordan', sizes: [40,41,42,43,44], svgKey: 'jordan3' },
+        { id: 6, name: 'Nike Dunk Low', desc: 'Clásico renovado, colores vibrantes.', price: 160, brand: 'nike', sizes: [38,39,40,41,42], svgKey: 'dunkLow' }
+    ];
+
+    /* =====================================================
+       ESTADO
+       ===================================================== */
+    let cart = [];
+    const selectedSizes = {};
+
+    /* =====================================================
+       DOM
+       ===================================================== */
+    const grid           = document.getElementById('product-grid');
+    const cartPanel      = document.getElementById('cart-panel');
+    const cartOverlay    = document.getElementById('cart-overlay');
+    const cartItemsEl    = document.getElementById('cart-items');
+    const cartTotalEl    = document.getElementById('cart-total-amount');
+    const cartCountEl    = document.getElementById('cart-count');
+    const cartLabelEl    = document.getElementById('cart-item-count-label');
+    const toastEl        = document.getElementById('toast');
+    const toastMsgEl     = document.getElementById('toast-message');
+    const toastIconEl    = document.getElementById('toast-icon');
+
+    // ====== BOTÓN INSTALAR ======
+    const btnInstall = document.getElementById('btn-install');
+    let deferredPrompt;
+
+    /* =====================================================
+       RENDER PRODUCTOS
+       ===================================================== */
+    function renderProducts(filter) {
+        const list = filter === 'all' ? products : products.filter(p => p.brand === filter);
+        grid.innerHTML = '';
+
+        if (!list.length) {
+            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem 0;color:var(--text-secondary);">
+                <p style="font-size:3rem;margin-bottom:.5rem">🔍</p>
+                <p style="font-size:1.2rem;font-weight:600">No hay productos de esta marca</p>
+            </div>`;
+            return;
+        }
+
+        list.forEach((p, i) => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.style.animationDelay = `${i * 0.07}s`;
+            card.dataset.pid = p.id;
+
+            const selectedSize = selectedSizes[p.id] || null;
+
+            const sizeChips = p.sizes.map(s => {
+                const sel = selectedSize === s ? ' is-selected' : '';
+                return `<button class="size-chip${sel}" data-pid="${p.id}" data-size="${s}">${s}</button>`;
+            }).join('');
+
+            const btnLabel = selectedSize ? `Agregar — talla ${selectedSize}` : 'Seleccioná una talla';
+
+            card.innerHTML = `
+                <div class="brand-tag ${p.brand}">${p.brand}</div>
+                <div class="product-image">${svgs[p.svgKey]}</div>
+                <div class="product-name">${p.name}</div>
+                <div class="product-desc">${p.desc}</div>
+                <div class="product-price">$${p.price}</div>
+                <div class="size-row">${sizeChips}</div>
+                <button class="btn-add" data-pid="${p.id}" ${selectedSize ? '' : 'disabled'}>
+                    ${btnLabel}
+                </button>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    /* =====================================================
+       SELECCIÓN DE TALLA (delegación sobre #product-grid)
+       ===================================================== */
+    grid.addEventListener('click', function (e) {
+        const chip = e.target.closest('.size-chip');
+        if (chip) {
+            const pid  = Number(chip.dataset.pid);
+            const size = Number(chip.dataset.size);
+
+            selectedSizes[pid] = size;
+
+            const card = chip.closest('.product-card');
+            card.querySelectorAll('.size-chip').forEach(c => c.classList.remove('is-selected'));
+            chip.classList.add('is-selected');
+
+            const btn = card.querySelector('.btn-add');
+            btn.disabled = false;
+            btn.textContent = `Agregar — talla ${size}`;
+            btn.classList.remove('added', 'shake');
+            return;
+        }
+
+        const btn = e.target.closest('.btn-add');
+        if (btn && !btn.disabled) {
+            const pid  = Number(btn.dataset.pid);
+            const size = selectedSizes[pid];
+
+            if (!size) {
+                showToast('⚠️ Seleccioná una talla primero.', 'warning');
+                btn.classList.remove('shake');
+                void btn.offsetWidth;
+                btn.classList.add('shake');
+                return;
+            }
+
+            addToCart(pid, size, btn);
+        }
+    });
+
+    /* =====================================================
+       CARRITO — agregar
+       ===================================================== */
+    function addToCart(pid, size, btnEl) {
+        const p = products.find(x => x.id === pid);
+        if (!p) return;
+
+        const idx = cart.findIndex(c => c.id === pid && c.size === size);
+        if (idx !== -1) {
+            cart[idx].qty += 1;
+            showToast(`+1 ${p.name} · talla ${size}`, 'success');
+        } else {
+            cart.push({ id: p.id, name: p.name, price: p.price, size, qty: 1 });
+            showToast(`${p.name} · talla ${size} agregado ✅`, 'success');
+        }
+
+        if (btnEl) {
+            btnEl.textContent = '✓ Agregado';
+            btnEl.classList.add('added');
+            setTimeout(() => {
+                btnEl.classList.remove('added');
+                btnEl.textContent = `Agregar — talla ${size}`;
+            }, 1300);
+        }
+
+        updateCartUI();
+    }
+
+    /* =====================================================
+       CARRITO — quitar / qty
+       ===================================================== */
+    function removeFromCart(idx) {
+        const name = cart[idx].name;
+        cart.splice(idx, 1);
+        updateCartUI();
+        showToast(`${name} eliminado`, 'info');
+    }
+
+    function changeQty(idx, delta) {
+        if (!cart[idx]) return;
+        cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+        updateCartUI();
+    }
+
+    /* =====================================================
+       CARRITO — UI
+       ===================================================== */
+    function updateCartUI() {
+        const totalItems = cart.reduce((s, c) => s + c.qty, 0);
+        const totalPrice = cart.reduce((s, c) => s + c.price * c.qty, 0);
+
+        cartCountEl.textContent = totalItems;
+        cartTotalEl.textContent = `$${totalPrice.toFixed(2)}`;
+        cartLabelEl.textContent = `(${totalItems} ${totalItems === 1 ? 'item' : 'items'})`;
+
+        cartCountEl.classList.remove('bump');
+        requestAnimationFrame(() => cartCountEl.classList.add('bump'));
+
+        if (!cart.length) {
+            cartItemsEl.innerHTML = `
+                <div class="cart-empty">
+                    <span class="empty-icon">👟</span>
+                    <div class="empty-title">Tu carrito está vacío</div>
+                    <p style="font-size:.85rem;color:var(--text-secondary)">Agregá tus zapatos favoritos</p>
+                </div>`;
+            return;
+        }
+
+        cartItemsEl.innerHTML = cart.map((item, i) => `
+            <div class="cart-item">
+                <div class="item-info">
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-size">Talla ${item.size}</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:.5rem">
+                    <div class="item-qty">
+                        <button class="qty-btn" data-action="decr" data-idx="${i}">−</button>
+                        <span>${item.qty}</span>
+                        <button class="qty-btn" data-action="incr" data-idx="${i}">+</button>
+                    </div>
+                    <span class="item-price">$${(item.price * item.qty).toFixed(2)}</span>
+                    <button class="item-remove" data-idx="${i}" title="Eliminar">✕</button>
+                </div>
+            </div>`).join('');
+
+        cartItemsEl.querySelectorAll('.item-remove').forEach(b => {
+            b.addEventListener('click', () => removeFromCart(Number(b.dataset.idx)));
+        });
+        cartItemsEl.querySelectorAll('.qty-btn').forEach(b => {
+            b.addEventListener('click', () => {
+                const idx = Number(b.dataset.idx);
+                changeQty(idx, b.dataset.action === 'incr' ? 1 : -1);
+            });
+        });
+    }
+
+    /* =====================================================
+       TOAST
+       ===================================================== */
+    let toastTimer;
+    function showToast(msg, type = 'success') {
+        const icons = { success: '✅', warning: '⚠️', info: 'ℹ️', error: '❌' };
+        toastMsgEl.textContent = msg;
+        toastIconEl.textContent = icons[type] || '✅';
+
+        const bar = toastEl.querySelector('.toast-progress');
+        bar.style.animation = 'none';
+        requestAnimationFrame(() => { bar.style.animation = 'toastProgress 2.5s linear forwards'; });
+
+        toastEl.classList.add('is-visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove('is-visible'), 2500);
+    }
+
+    /* =====================================================
+       CARRITO — abrir / cerrar
+       ===================================================== */
+    function openCart()  { cartPanel.classList.add('is-open'); cartOverlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
+    function closeCart() { cartPanel.classList.remove('is-open'); cartOverlay.classList.remove('is-open'); document.body.style.overflow = ''; }
+
+    document.getElementById('btn-cart').addEventListener('click', openCart);
+    document.getElementById('btn-cart-close').addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
+
+    /* =====================================================
+       CHECKOUT
+       ===================================================== */
+    document.getElementById('btn-checkout').addEventListener('click', () => {
+        if (!cart.length) { showToast('El carrito está vacío.', 'warning'); return; }
+        const lines = cart.map(c => `${c.name} (talla ${c.size}) × ${c.qty} = $${(c.price*c.qty).toFixed(2)}`).join('\n');
+        const total = cart.reduce((s,c) => s + c.price*c.qty, 0);
+        const msg = `🛒 *Pedido HORMA*\n\n${lines}\n\n📦 *Total: $${total.toFixed(2)}*`;
+        window.open(`https://wa.me/50322000000?text=${encodeURIComponent(msg)}`, '_blank');
+    });
+
+    /* =====================================================
+       FILTROS
+       ===================================================== */
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', function () {
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            renderProducts(this.dataset.filter);
+        });
+    });
+
+    /* =====================================================
+       BOTÓN INSTALAR (PWA)
+       ===================================================== */
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        btnInstall.style.display = 'flex';
+    });
+
+    btnInstall.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const result = await deferredPrompt.userChoice;
+            if (result.outcome === 'accepted') {
+                btnInstall.style.display = 'none';
+            }
+            deferredPrompt = null;
+        }
+    });
+
+    window.addEventListener('appinstalled', () => {
+        btnInstall.style.display = 'none';
+    });
+
+    /* =====================================================
+       INICIALIZAR
+       ===================================================== */
+    renderProducts('all');
+    updateCartUI();
+
+    console.log('🚀 HORMA loaded — SVG shoes, fixed cart & size selection');
+})();
+</script>
+</body>
+</html>
